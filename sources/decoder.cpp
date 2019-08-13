@@ -45,7 +45,9 @@ Result CaclAsyncHash(std::vector<FutRes>& futures)
 {
     Result result;
 
-    static auto is_future_valid = [](FutRes& fut)
+    // TODO. Now process wait all futures ending.
+    // This is not entirely true. It is necessary to wait for one successful thread.
+    /*static auto is_future_valid = [](FutRes& fut)
     {
         return fut.valid();
     };
@@ -70,7 +72,7 @@ Result CaclAsyncHash(std::vector<FutRes>& futures)
         }
 
         return false;
-    };
+    };*/
 
     std::for_each(futures.begin(), futures.end(), [&](FutRes& fut){
         auto tmp_res = fut.get();
@@ -93,11 +95,23 @@ Result CaclAsyncHash(std::vector<FutRes>& futures)
 
 }
 
+MD5Decoder::MD5Decoder(const std::vector<char>& range, int max_length)
+    : mRange(std::move(range)),
+      mMax(max_length)
+{
+}
+
 MD5Decoder::MD5Decoder(const std::string& original, std::vector<char> &&range, int max_length)
     : mOriginal(original),
       mRange(std::move(range)),
       mMax(max_length)
 {
+    mIsUpperOriginal = IsUpper(mOriginal);
+}
+
+void MD5Decoder::InitOriginalHash(const std::string& original)
+{
+    mOriginal = original;
     mIsUpperOriginal = IsUpper(mOriginal);
 }
 
@@ -178,7 +192,7 @@ Result MD5Decoder::Execute()
     }
 
     time (&f_end);
-    std::cout << "\nCracked in: " << difftime(f_end, f_begin) << " seconds" << "\n";
+    std::cout << "Decoded in: " << difftime(f_end, f_begin) << " seconds" << "\n";
     return result;
 }
 

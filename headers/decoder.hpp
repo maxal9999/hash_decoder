@@ -29,8 +29,10 @@ struct Result
 class MD5Decoder
 {
 public:
+    MD5Decoder(const std::vector<char>& range, int max_length);
     MD5Decoder(const std::string& original, std::vector<char>&& range, int max_length);
 
+    void InitOriginalHash(const std::string& original);
     Result Execute();
 
 private:

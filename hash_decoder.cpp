@@ -38,11 +38,6 @@ constexpr size_t HASH_SIZE = 32;
 
 int main(int argc, char* argv[])
 {
-    /*MD5 md5;
-    //auto encode = md5.digestString("HELLO THERE I AM MD5!");
-    char* encode = "b67af3651497e0d3ef0fde55308a7d0e";//md5.digestString("HELO");
-    std::cout << "original hash: " << encode << "\n";*/
-
     if (argc < 5)
         throw std::invalid_argument("Not enough arguments");
 
@@ -120,7 +115,10 @@ int main(int argc, char* argv[])
 
     utils::MD5Decoder decoder(original_hash, std::move(parsed_array), MAX);
     auto res = decoder.Execute();
-    std::cout << "Result: " << res.mResultStr << "\n";
+    if (res.mResultType == utils::ResultType::SUCCESS)
+        std::cout << "Result: " << res.mResultStr << "\n";
+    else
+        std::cout << "Result: failed to decode hash" << "\n";
 
     return 0;
 }
