@@ -78,7 +78,7 @@ Result CaclAsyncHash(std::vector<FutRes>& futures)
 
     std::for_each(futures.begin(), futures.end(), [&](FutRes& fut){
         auto tmp_res = fut.get();
-        if(tmp_res.mResultType == ResultType::SUCCESS)
+        if (tmp_res.mResultType == ResultType::SUCCESS)
             result = std::move(tmp_res);
     });
 
