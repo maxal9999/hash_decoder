@@ -23,8 +23,8 @@ namespace
 
 bool IsUpper(const std::string& tmp_str)
 {
-    for(auto symbol: tmp_str)
-        if(std::islower(symbol))
+    for (auto symbol: tmp_str)
+        if (std::islower(symbol))
             return false;
 
     return true;
@@ -67,7 +67,7 @@ Result CaclAsyncHash(std::vector<FutRes>& futures)
             return false;
 
         auto tmp_res = ready_it->get();
-        if(tmp_res.mResultType == ResultType::SUCCESS)
+        if (tmp_res.mResultType == ResultType::SUCCESS)
         {
             result = std::move(tmp_res);
             return true;
@@ -84,11 +84,11 @@ Result CaclAsyncHash(std::vector<FutRes>& futures)
 
     /*while (std::any_of(futures.begin(), futures.end(), is_future_valid))
     {
-       if(is_success())
+       if (is_success())
            break;
 
        bool all_ready = std::all_of(futures.begin(), futures.end(), is_future_ready);
-       if(all_ready)
+       if (all_ready)
            break;
     }*/
 
@@ -120,7 +120,7 @@ void MD5Decoder::InitOriginalHash(const std::string& original)
 bool MD5Decoder::IsEqualOriginal(const std::string& cacl_str)
 {
     auto md5_str = MD5String(cacl_str);
-    if(mIsUpperOriginal)
+    if (mIsUpperOriginal)
         ToUpper(md5_str);
 
     return md5_str == mOriginal;
@@ -177,7 +177,7 @@ Result MD5Decoder::Execute()
     for (size_t idx = 0; idx < all_chars_size; idx++)
     {
         auto created_thread = std::min(thread_count, all_chars_size - idx);
-        for(size_t i = 0; i < created_thread; i++)
+        for (size_t i = 0; i < created_thread; i++)
         {
             futures[i] = std::async(impl_func, idx);
             idx++;
