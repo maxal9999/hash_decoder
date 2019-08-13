@@ -20,14 +20,6 @@ namespace utils
 namespace
 {
 
-// 65-90:97-122
-
-constexpr std::array<char, 60> ALL_CHARS = {
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z',
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z'
-};
-
 bool IsUpper(const std::string& tmp_str)
 {
     for(auto symbol: tmp_str)
@@ -101,8 +93,9 @@ Result CaclAsyncHash(std::vector<FutRes>& futures)
 
 }
 
-MD5Decoder::MD5Decoder(char* original, int max_length)
+MD5Decoder::MD5Decoder(const std::string& original, std::vector<char> &&range, int max_length)
     : mOriginal(original),
+      mRange(std::move(range)),
       mMax(max_length)
 {
     mIsUpperOriginal = IsUpper(mOriginal);
@@ -131,7 +124,7 @@ Result MD5Decoder::Next(const std::string& cacl_str)
     if (cacl_str.size() == mMax)
         return Result{cacl_str, ResultType::FAILED};
 
-    for (auto symbol: ALL_CHARS)
+    for (auto symbol: mRange)
     {
         std::string tmp_str = cacl_str;
         tmp_str += symbol;
@@ -149,18 +142,18 @@ Result MD5Decoder::Execute()
     time(&f_begin);
 
     auto thread_count = static_cast<size_t>(std::thread::hardware_concurrency());
-    std::cout << "thread count: " << thread_count << "\n";
+    std::cout << "Thread count: " << thread_count << "\n";
 
     std::vector<FutRes> futures;
     futures.resize(static_cast<size_t>(thread_count));
 
-    constexpr auto all_chars_size = ALL_CHARS.size();
+    auto all_chars_size = mRange.size();
 
     Result result;
 
     auto impl_func = [&](size_t char_idx)
     {
-        auto symbol = ALL_CHARS[char_idx];
+        auto symbol = mRange[char_idx];
         std::string tmp_str = {symbol};
         return Next(tmp_str);
     };

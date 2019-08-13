@@ -6,6 +6,7 @@
 #include <md5.hpp>
 
 #include <string>
+#include <vector>
 
 
 namespace utils
@@ -28,13 +29,14 @@ struct Result
 class MD5Decoder
 {
 public:
-    MD5Decoder(char* original, int max_length);
+    MD5Decoder(const std::string& original, std::vector<char>&& range, int max_length);
 
     Result Execute();
 
 private:
     std::string mOriginal;
     bool mIsUpperOriginal;
+    std::vector<char> mRange;
     size_t mMax;
     MD5 mMD5;
 
