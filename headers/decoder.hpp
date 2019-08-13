@@ -1,7 +1,8 @@
-/*
- *
- *
-*/
+/**
+ * \file
+ * \brief Hash decoder API
+ * \author Maksimovskiy A.S.
+ */
 
 #include <md5.hpp>
 
@@ -12,13 +13,14 @@
 namespace utils
 {
 
-
+// Two types of the result
 enum class ResultType: int16_t
 {
     FAILED,
     SUCCESS
 };
 
+// Result struct for hash decoder
 struct Result
 {
     std::string mResultStr;
@@ -29,10 +31,14 @@ struct Result
 class MD5Decoder
 {
 public:
+    // Constructor
     MD5Decoder(const std::vector<char>& range, int max_length);
     MD5Decoder(const std::string& original, std::vector<char>&& range, int max_length);
 
+    // Init hash to decode
     void InitOriginalHash(const std::string& original);
+
+    // Method to decode hash
     Result Execute();
 
 private:

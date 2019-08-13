@@ -1,7 +1,8 @@
-/*
- *
- *
-*/
+/**
+ * \file
+ * \brief Implementation of the hash decoder
+ * \author Maksimovskiy A.S.
+ */
 
 #include <decoder.hpp>
 
@@ -41,6 +42,7 @@ namespace
 
 using FutRes = std::future<Result>;
 
+// Function for correct getting result from futures
 Result CaclAsyncHash(std::vector<FutRes>& futures)
 {
     Result result;

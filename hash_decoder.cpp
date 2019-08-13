@@ -1,3 +1,10 @@
+/**
+ * \file
+ * \brief Executable cpp
+ * \author Maksimovskiy A.S.
+ */
+
+
 #include <decoder.hpp>
 #include <md5.hpp>
 
@@ -7,7 +14,6 @@
 #include <thread>
 
 
-// 65-90:97-122
 namespace
 {
 
@@ -41,6 +47,7 @@ int main(int argc, char* argv[])
     if (argc < 5)
         throw std::invalid_argument("Not enough arguments");
 
+    // Range of the integer symbols
     size_t from = 0, to = 0;
     try
     {
@@ -55,10 +62,12 @@ int main(int argc, char* argv[])
     if (from < 0 || from > 10 || to < from || to > 10)
         throw std::invalid_argument("Invalid integer range bound");
 
+    // List of the analyzed characters
     std::vector<char> parsed_array;
     for (size_t idx = from; idx < to; idx++)
         parsed_array.emplace_back(INT_CHARS[idx]);
 
+    // Lambda function to parse input argument (example, 65-90:97-122)
     auto split = [](std::vector<std::string>& res, std::string& input, const std::string& delim)
     {
         size_t pos = 0;

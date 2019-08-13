@@ -1,3 +1,10 @@
+/**
+ * \file
+ * \brief Unit tests of the project
+ * \author Maksimovskiy A.S.
+ */
+
+
 #include "decoder.hpp"
 #include "md5.hpp"
 
