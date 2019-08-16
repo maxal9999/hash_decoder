@@ -30,8 +30,8 @@ constexpr std::array<char, 26> LOWER_CHARS = {
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
 };
 
-// Maximum of password length
-constexpr int MAX = 4;
+// Default maximum of password length
+constexpr int DEFAULT_MAX = 4;
 
 constexpr size_t MIN_A = 65;
 constexpr size_t MAX_Z = 90;
@@ -122,7 +122,19 @@ int main(int argc, char* argv[])
     if (original_hash.size() != HASH_SIZE)
         throw std::invalid_argument("Unsupported hash view");
 
-    utils::MD5Decoder decoder(original_hash, std::move(parsed_array), MAX);
+    int password_max = DEFAULT_MAX;
+    if (argc == 6)
+    {
+        try
+        {
+            password_max = std::stoi(argv[5]);
+        }
+        catch( ... )
+        {
+        }
+    }
+
+    utils::MD5Decoder decoder(original_hash, std::move(parsed_array), password_max);
     auto res = decoder.Execute();
     if (res.mResultType == utils::ResultType::SUCCESS)
         std::cout << "Result: " << res.mResultStr << "\n";
