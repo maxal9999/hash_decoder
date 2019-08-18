@@ -11,9 +11,11 @@ include_directories(headers)
 #------------------------------------------------------------------
 
 set (LIB_HEADERS headers/md5.hpp
-                 headers/decoder.hpp)
+                 headers/decoder.hpp
+                 headers/thread_pool.hpp)
 
-set (LIB_SOURCES sources/decoder.cpp)
+set (LIB_SOURCES sources/decoder.cpp
+                 sources/thread_pool.cpp)
 
 set (LIB ${PROJECT}_lib)
 

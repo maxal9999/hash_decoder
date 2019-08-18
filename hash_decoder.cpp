@@ -8,6 +8,7 @@
 #include <decoder.hpp>
 #include <md5.hpp>
 
+#include <array>
 #include <iostream>
 #include <string>
 
