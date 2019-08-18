@@ -13,6 +13,7 @@ make
 
 EXAMPLE RUN:
 ./hash_decoder 3 5 65-90:97-122 b67af3651497e0d3ef0fde55308a7d0e
+
 OUTPUT:
 Result: avac
 
@@ -20,6 +21,7 @@ Also added a fifth parameter - the maximum length of the selection of an encrypt
 
 EXAMPLE RUN:
 ./hash_decoder 3 5 65-90:97-122 b67af3651497e0d3ef0fde55308a7d0e 5
+
 OUTPUT:
 Result: avac
 
